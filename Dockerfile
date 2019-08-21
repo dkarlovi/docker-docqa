@@ -11,8 +11,8 @@ RUN apk add --no-cache \
 RUN npm install --global --no-cache --prefix /nodejs \
         markdownlint-cli@0.18 \
         textlint@11.3 \
-        textlint-rule-alex@1.3 \
         textlint-filter-rule-comments@1.2 \
+        textlint-rule-alex@1.3 \
         textlint-rule-common-misspellings@1.0 \
         textlint-rule-no-dead-link@4.4 \
         textlint-rule-no-exclamation-question-mark@1.0 \

@@ -50,7 +50,7 @@
             <property name="list" value=""/>
         </validator>
         <validator name="DuplicatedSection">
-            <property name="threshold" value="0.9"/>
+            <property name="threshold" value="1.5"/>
         </validator>
         <validator name="InvalidWord">
             <property name="dict" value=""/>
@@ -66,7 +66,7 @@
             <property name="max_len" value="70"/>
         </validator>
         <validator name="Spelling">
-            <property name="dict" value="docs/dictionary.dic"/>
+            <property name="dict" value="../dictionary.dic"/>
             <property name="list" value=""/>
         </validator>
         <validator name="Hyphenation">
@@ -80,7 +80,7 @@
         <validator name="FrequentSentenceStart">
             <property name="leading_word_limit" value="3"/>
             <property name="min_sentence_count" value="5"/>
-            <property name="percentage_threshold" value="25"/>
+            <property name="percentage_threshold" value="30"/>
         </validator>
         <validator name="SuggestExpression">
             <property name="dict" value=""/>
