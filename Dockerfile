@@ -9,11 +9,19 @@ RUN apk add --no-cache \
         nodejs=${NODEJS_VERSION} \
         nodejs-npm=${NODEJS_VERSION}
 RUN npm install --global --no-cache --prefix /nodejs \
-        markdownlint-cli@0.17.0 \
+        markdownlint-cli@0.17 \
         textlint@11.3 \
-        textlint-rule-alex@1.3.1 \
-        textlint-rule-no-exclamation-question-mark@1.0.2 \
-        textlint-rule-no-todo@2.0.0
+        textlint-rule-alex@1.3 \
+        textlint-filter-rule-comments@1.2 \
+        textlint-rule-common-misspellings@1.0 \
+        textlint-rule-no-dead-link@4.4 \
+        textlint-rule-no-exclamation-question-mark@1.0 \
+        @textlint-rule/textlint-rule-no-invalid-control-character@1.2 \
+        textlint-rule-no-start-duplicated-conjunction@2.0 \
+        textlint-rule-no-todo@2.0 \
+        textlint-rule-sentence-length@2.1 \
+        textlint-rule-terminology@1.1 \
+        textlint-rule-write-good@1.6
 
 FROM ${BASE_IMAGE} AS python
 ARG PYTHON_VERSION
