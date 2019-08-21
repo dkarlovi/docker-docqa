@@ -9,6 +9,7 @@
         },
         "no-dead-link": true,
         "@textlint-rule/no-invalid-control-character": true,
+        "no-start-duplicated-conjunction": true,
         "no-todo": true,
         "sentence-length": {
             "max": 120

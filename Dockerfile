@@ -9,7 +9,7 @@ RUN apk add --no-cache \
         nodejs=${NODEJS_VERSION} \
         nodejs-npm=${NODEJS_VERSION}
 RUN npm install --global --no-cache --prefix /nodejs \
-        markdownlint-cli@0.17 \
+        markdownlint-cli@0.18 \
         textlint@11.3 \
         textlint-rule-alex@1.3 \
         textlint-filter-rule-comments@1.2 \
