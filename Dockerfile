@@ -3,6 +3,14 @@ ARG NODEJS_VERSION=10.16.0-r0
 ARG PYTHON_VERSION=3.7.3-r0
 ARG OPENJDK_VERSION=8.212.04-r1
 
+FROM ${BASE_IMAGE} AS downloader
+ENV VALE_VERSION=1.7.1
+WORKDIR /workarea
+RUN apk add --no-cache \
+        curl \
+    && mkdir -p /downloader/bin \
+    && curl -L -o /tmp/vale.tar.gz https://github.com/errata-ai/vale/releases/download/v${VALE_VERSION}/vale_${VALE_VERSION}_Linux_64-bit.tar.gz && tar xzvf /tmp/vale.tar.gz && cp vale /downloader/bin
+
 FROM ${BASE_IMAGE} AS nodejs
 ARG NODEJS_VERSION
 RUN apk add --no-cache \
@@ -49,11 +57,13 @@ ARG NODEJS_VERSION
 ARG OPENJDK_VERSION
 ARG PYTHON_VERSION
 RUN apk add --no-cache \
+        libc6-compat \
         nodejs=${NODEJS_VERSION} \
         openjdk8-jre-base=${OPENJDK_VERSION} \
         python3=${PYTHON_VERSION}
+COPY --from=downloader /downloader /downloader
 COPY --from=nodejs /nodejs /nodejs
 COPY --from=redpen /build/redpen/redpen-cli/target/redpen-cli-1.10.3-SNAPSHOT-assembled/redpen-cli-1.10.3-SNAPSHOT /redpen
 COPY --from=python /python /python
-ENV PATH="${PATH}:/nodejs/bin:/python/bin:/redpen/bin"
+ENV PATH="${PATH}:/downloader/bin:/nodejs/bin:/python/bin:/redpen/bin"
 ENV PYTHONPATH=/python/lib/python3.7/site-packages

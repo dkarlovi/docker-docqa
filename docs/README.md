@@ -41,7 +41,7 @@ See this repository's [`Makefile`](./../Makefile) and sample [`config/`](../conf
 
 The idea is to have the tools tailored to the project's needs with custom configuration.
 
-Developers run the same tools CI build runs (but locally), using the provided procedure, ie `make test`.
+Developers run the same tools CI build runs (but locally), using the provided procedure, i.e., `make test`.
 
 ## Included tools
 
@@ -151,3 +151,9 @@ See also the sample [`.textlintrc`](../config/textlint/.textlintrc) file.
 > textlint rule to check your English writing styles with [btford/write-good](https://github.com/btford/write-good), naive linter for English prose
 
 [Configuration for `write-good`](https://www.npmjs.com/package/textlint-rule-write-good#options).
+
+### [Vale](https://errata-ai.github.io/vale/)
+
+> A syntax-aware linter for prose built with speed and extensibility in mind.
+
+[Configuration for `vale`](https://errata-ai.github.io/vale/config/).
