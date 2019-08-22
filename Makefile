@@ -8,7 +8,7 @@ DOCS_PATHS=README.md config/*/*.md docs/*.md
 build: clean
 	docker build . -t ${DOCQA_DOCKER_IMAGE}
 
-test: markdownlint proselint textlint redpen
+test: markdownlint proselint textlint vale
 
 push: build
 	docker push ${DOCQA_DOCKER_IMAGE}
@@ -25,6 +25,9 @@ textlint: ensure
 
 redpen: ensure
 	sh -c "${DOCQA_DOCKER_COMMAND} redpen --conf config/redpen/redpen-conf.xml --threshold info --result-format plain2 ${DOCS_PATHS}"
+
+vale: ensure
+	sh -c "${DOCQA_DOCKER_COMMAND} vale --config config/vale/.vale.ini ${DOCS_PATHS}"
 
 ensure:
 	mkdir -p var/tmp/docqa
