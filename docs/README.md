@@ -67,13 +67,19 @@ The image contains these tools:
 
 There is also the [RedPen online configuration generator](http://redpen.herokuapp.com/).
 
+### [RestructuredText lint](https://github.com/twolfson/restructuredtext-lint)
+
+> reStructuredText linter
+
+This tool takes no configuration.
+
 ### [Textlint](https://textlint.github.io/)
 
 > The pluggable natural language linter for text and markdown.
 
-Textlint allows to enable features via filters and rules.
+Textlint allows to enable features via filters, plugins and rules.
 
-Enable filters and rules using the Textlint configuration.
+Enable filters, plugins and rules using the Textlint configuration.
 See sample [`.textlintrc`](./../config/textlint/.textlintrc) and linked filter / rule configuration for an examples.
 
 #### Included Textlint filters
@@ -85,6 +91,16 @@ The Docker image contains these Textlint filters.
 > textlint rule that ignore error using comments directive
 
 [Configuration for `comments`](https://www.npmjs.com/package/textlint-filter-rule-comments#settings).
+
+#### Included Textlint plugins
+
+The Docker image contains these Textlint plugins.
+
+##### [RST](https://github.com/jimo1001/textlint-plugin-rst)
+
+> reStructuredText support for textlint
+
+[Configuration for `rst`](https://github.com/jimo1001/textlint-plugin-rst#usage).
 
 #### Included Textlint rules
 

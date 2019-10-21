@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=alpine:3.10
-ARG NODEJS_VERSION=10.16.0-r0
-ARG PYTHON_VERSION=3.7.3-r0
-ARG OPENJDK_VERSION=8.212.04-r1
+ARG NODEJS_VERSION=10.16.3-r0
+ARG PYTHON_VERSION=3.7.5-r1
+ARG OPENJDK_VERSION=8.222.10-r0
 
 FROM ${BASE_IMAGE} AS downloader
 ENV VALE_VERSION=1.7.1
@@ -20,6 +20,7 @@ RUN npm install --global --no-cache --prefix /nodejs \
         markdownlint-cli@0.18 \
         textlint@11.3 \
         textlint-filter-rule-comments@1.2 \
+        textlint-plugin-rst@0.1 \
         textlint-rule-alex@1.3 \
         textlint-rule-common-misspellings@1.0 \
         textlint-rule-no-dead-link@4.4 \
@@ -39,7 +40,11 @@ RUN python3 -m ensurepip \
     && rm -r /usr/lib/python*/ensurepip \
     && pip3 install --no-cache --upgrade pip setuptools wheel \
     && pip3 install --no-cache --install-option="--prefix=/python" \
-        proselint
+        docutils \
+        docutils-ast-writer \
+        proselint \
+        restructuredtext_lint \
+    && ln -s /python/bin/rst2html.py /python/bin/rst2html
 
 FROM ${BASE_IMAGE} AS redpen
 WORKDIR /build
@@ -60,10 +65,11 @@ RUN apk add --no-cache \
         libc6-compat \
         nodejs=${NODEJS_VERSION} \
         openjdk8-jre-base=${OPENJDK_VERSION} \
-        python3=${PYTHON_VERSION}
+        python3=${PYTHON_VERSION} \
+    && ln -s /usr/bin/python3 /usr/bin/python
 COPY --from=downloader /downloader /downloader
 COPY --from=nodejs /nodejs /nodejs
-COPY --from=redpen /build/redpen/redpen-cli/target/redpen-cli-1.10.3-SNAPSHOT-assembled/redpen-cli-1.10.3-SNAPSHOT /redpen
+COPY --from=redpen /build/redpen/redpen-cli/target/redpen-cli-1.10.4-SNAPSHOT-assembled/redpen-cli-1.10.4-SNAPSHOT /redpen
 COPY --from=python /python /python
 ENV PATH="${PATH}:/downloader/bin:/nodejs/bin:/python/bin:/redpen/bin"
 ENV PYTHONPATH=/python/lib/python3.7/site-packages
