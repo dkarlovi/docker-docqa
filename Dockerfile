@@ -1,7 +1,6 @@
 ARG BASE_IMAGE=alpine:3.10
 ARG NODEJS_VERSION=10.16.3-r0
 ARG PYTHON_VERSION=3.7.5-r1
-ARG OPENJDK_VERSION=8.222.10-r0
 
 FROM ${BASE_IMAGE} AS downloader
 ENV VALE_VERSION=1.7.1
@@ -46,30 +45,16 @@ RUN python3 -m ensurepip \
         restructuredtext_lint \
     && ln -s /python/bin/rst2html.py /python/bin/rst2html
 
-FROM ${BASE_IMAGE} AS redpen
-WORKDIR /build
-ARG OPENJDK_VERSION
-RUN apk add --no-cache \
-        git \
-        maven \
-        openjdk8=${OPENJDK_VERSION} \
-    && git clone https://github.com/redpen-cc/redpen.git --depth=1
-WORKDIR /build/redpen
-RUN mvn install
-
 FROM ${BASE_IMAGE}
 ARG NODEJS_VERSION
-ARG OPENJDK_VERSION
 ARG PYTHON_VERSION
 RUN apk add --no-cache \
         libc6-compat \
         nodejs=${NODEJS_VERSION} \
-        openjdk8-jre-base=${OPENJDK_VERSION} \
         python3=${PYTHON_VERSION} \
     && ln -s /usr/bin/python3 /usr/bin/python
 COPY --from=downloader /downloader /downloader
 COPY --from=nodejs /nodejs /nodejs
-COPY --from=redpen /build/redpen/redpen-cli/target/redpen-cli-1.10.4-SNAPSHOT-assembled/redpen-cli-1.10.4-SNAPSHOT /redpen
 COPY --from=python /python /python
-ENV PATH="${PATH}:/downloader/bin:/nodejs/bin:/python/bin:/redpen/bin"
+ENV PATH="${PATH}:/downloader/bin:/nodejs/bin:/python/bin"
 ENV PYTHONPATH=/python/lib/python3.7/site-packages
