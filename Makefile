@@ -26,9 +26,6 @@ proselint: ensure
 textlint: ensure
 	sh -c "${DOCQA_DOCKER_COMMAND} textlint --config config/textlint/.textlintrc ${DOCS_PATHS}"
 
-redpen: ensure
-	sh -c "${DOCQA_DOCKER_COMMAND} redpen --conf config/redpen/redpen-conf.xml --threshold info --result-format plain2 ${DOCS_PATHS}"
-
 vale: ensure
 	sh -c "${DOCQA_DOCKER_COMMAND} vale --config config/vale/.vale.ini ${DOCS_PATHS}"
 
