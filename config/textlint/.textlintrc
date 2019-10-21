@@ -2,6 +2,9 @@
     "filters": {
         "comments": true
     },
+    "plugins": {
+        "rst"
+    },
     "rules": {
         "alex": true,
         "common-misspellings": {
