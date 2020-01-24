@@ -50,6 +50,7 @@ ARG NODEJS_VERSION
 ARG PYTHON_VERSION
 RUN apk add --no-cache \
         libc6-compat \
+        make \
         nodejs=${NODEJS_VERSION} \
         python3=${PYTHON_VERSION} \
     && ln -s /usr/bin/python3 /usr/bin/python
