@@ -1,9 +1,9 @@
-ARG BASE_IMAGE=alpine:3.10
-ARG NODEJS_VERSION=10.16.3-r0
-ARG PYTHON_VERSION=3.7.5-r1
+ARG BASE_IMAGE=alpine:3.13
+ARG NODEJS_VERSION=14.16.1-r1
+ARG PYTHON_VERSION=3.8.8-r0
 
 FROM ${BASE_IMAGE} AS downloader
-ENV VALE_VERSION=1.7.1
+ENV VALE_VERSION=2.10.2
 WORKDIR /workarea
 RUN apk add --no-cache \
         curl \
@@ -16,20 +16,20 @@ RUN apk add --no-cache \
         nodejs=${NODEJS_VERSION} \
         nodejs-npm=${NODEJS_VERSION}
 RUN npm install --global --no-cache --prefix /nodejs \
-        markdownlint-cli@0.18 \
-        textlint@11.3 \
-        textlint-filter-rule-comments@1.2 \
-        textlint-plugin-rst@0.1 \
-        textlint-rule-alex@1.3 \
-        textlint-rule-common-misspellings@1.0 \
-        textlint-rule-no-dead-link@4.4 \
-        textlint-rule-no-exclamation-question-mark@1.0 \
-        @textlint-rule/textlint-rule-no-invalid-control-character@1.2 \
-        textlint-rule-no-start-duplicated-conjunction@2.0 \
-        textlint-rule-no-todo@2.0 \
-        textlint-rule-sentence-length@2.1 \
-        textlint-rule-terminology@1.1 \
-        textlint-rule-write-good@1.6
+        markdownlint-cli \
+        textlint \
+        textlint-filter-rule-comments \
+        textlint-plugin-rst \
+        textlint-rule-alex \
+        textlint-rule-common-misspellings \
+        textlint-rule-no-dead-link \
+        textlint-rule-no-exclamation-question-mark \
+        @textlint-rule/textlint-rule-no-invalid-control-character \
+        textlint-rule-no-start-duplicated-conjunction \
+        textlint-rule-no-todo \
+        textlint-rule-sentence-length \
+        textlint-rule-terminology \
+        textlint-rule-write-good
 
 FROM ${BASE_IMAGE} AS python
 ARG PYTHON_VERSION
@@ -38,10 +38,9 @@ RUN apk add --no-cache \
 RUN python3 -m ensurepip \
     && rm -r /usr/lib/python*/ensurepip \
     && pip3 install --no-cache --upgrade pip setuptools wheel \
-    && pip3 install --no-cache --install-option="--prefix=/python" \
+    && pip3 install --no-cache --prefix=/python \
         docutils \
         docutils-ast-writer \
-        proselint \
         restructuredtext_lint \
     && ln -s /python/bin/rst2html.py /python/bin/rst2html
 
@@ -49,6 +48,7 @@ FROM ${BASE_IMAGE}
 ARG NODEJS_VERSION
 ARG PYTHON_VERSION
 RUN apk add --no-cache \
+        asciidoctor \
         libc6-compat \
         make \
         nodejs=${NODEJS_VERSION} \
@@ -58,4 +58,4 @@ COPY --from=downloader /downloader /downloader
 COPY --from=nodejs /nodejs /nodejs
 COPY --from=python /python /python
 ENV PATH="${PATH}:/downloader/bin:/nodejs/bin:/python/bin"
-ENV PYTHONPATH=/python/lib/python3.7/site-packages
+ENV PYTHONPATH=/python/lib/python3.8/site-packages

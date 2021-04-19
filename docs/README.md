@@ -51,13 +51,7 @@ The image contains these tools:
 
 > A Node.js style checker and lint tool for Markdown/CommonMark files.
 
-[Configuration for `markdownlint`](https://github.com/DavidAnson/markdownlint/blob/master/doc/Rules.md).
-
-### [Proselint](http://proselint.com/)
-
-> A linter for prose.
-
-[Configuration for `proselint`](https://github.com/amperser/proselint#checks).
+[Configuration for `markdownlint`](https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md).
 
 ### [RestructuredText lint](https://github.com/twolfson/restructuredtext-lint)
 
